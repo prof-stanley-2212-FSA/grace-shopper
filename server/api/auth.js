@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express.Router();
 const { User } = require('../db');
+const { isLoggedIn } = require('./middleware');
 
 module.exports = app;
 
@@ -13,9 +14,9 @@ app.post('/', async(req, res, next)=> {
   }
 });
 
-app.get('/', async(req, res, next)=> {
+app.get('/', isLoggedIn, (req, res, next)=> {
   try {
-    res.send(await User.findByToken(req.headers.authorization));
+    res.send(req.user);
   }
   catch(ex){
     next(ex);
