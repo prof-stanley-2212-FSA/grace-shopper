@@ -13,7 +13,10 @@ const App = ()=> {
   const prevAuth = useRef({}); 
 
   useEffect(()=> {
-    dispatch(loginWithToken());
+    dispatch(loginWithToken())
+      .catch((ex)=> {
+        dispatch(fetchCart());
+      });
     dispatch(fetchProducts());
   }, []);
 
@@ -24,6 +27,7 @@ const App = ()=> {
     }
     if(prevAuth.current.id && !auth.id){
       console.log('logged out');
+      dispatch(fetchCart());
     }
   }, [auth]);
 
@@ -41,10 +45,21 @@ const App = ()=> {
         auth.id ? <Home /> : <Login />
       }
       {
-        !!auth.id  && (
+        !!auth.id  ? (
           <div>
             <nav>
               <Link to='/'>Home</Link>
+              <Link to='/cart'>Cart ({ count })</Link>
+              <Link to='/products'>Products</Link>
+            </nav>
+            <Routes>
+              <Route path='/cart' element={ <Cart /> } />
+              <Route path='/products' element={ <Products /> } />
+            </Routes>
+          </div>
+        ) : (
+          <div>
+            <nav>
               <Link to='/cart'>Cart ({ count })</Link>
               <Link to='/products'>Products</Link>
             </nav>

@@ -11,9 +11,9 @@ const Cart = ()=> {
       <h1>Cart</h1>
       <ul>
         {
-          cart.lineItems.map( lineItem => {
+          cart.lineItems.map( (lineItem, idx) => {
             return (
-              <li key={ lineItem.id }>
+              <li key={ lineItem.id || idx }>
                 { lineItem.product.name } { lineItem.quantity }
               </li>
             );

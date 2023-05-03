@@ -23,6 +23,9 @@ export const loginWithToken = ()=> {
       });
       dispatch({ type: 'SET_AUTH', auth: response.data });
     }
+    else {
+      throw 'no token';
+    }
   };
 };
 
