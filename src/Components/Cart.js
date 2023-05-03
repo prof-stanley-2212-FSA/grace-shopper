@@ -13,7 +13,7 @@ const Cart = ()=> {
         {
           cart.lineItems.map( lineItem => {
             return (
-              <li>
+              <li key={ lineItem.id }>
                 { lineItem.product.name } { lineItem.quantity }
               </li>
             );
